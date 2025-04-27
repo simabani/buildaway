@@ -1,2 +1,2 @@
 # buildaway
-My personal cosing projects
+My personal coding projects
