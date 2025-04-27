@@ -1,19 +1,22 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
     margin: 0;
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease, background-image 0.5s ease; /* Smooth transitions */
+    background-size: cover;
+    background-position: center;
 }
 
 .container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for better text readability over images */
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+    text-align: center; /* Center align text within the container */
     width: 90%;
     max-width: 400px;
 }
@@ -43,20 +46,20 @@ label {
 
 input[type="text"],
 select {
-    padding: 10px;
+    padding: 12px; /* Slightly larger padding */
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px; /* More rounded corners */
     font-size: 16px;
 }
 
 button {
     background-color: #007bff;
     color: white;
-    padding: 12px 20px;
+    padding: 14px 24px; /* Slightly larger button */
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* More rounded corners */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px; /* Slightly larger font */
     transition: background-color 0.3s ease;
 }
 
@@ -68,7 +71,7 @@ button:hover {
     margin-top: 20px;
     padding: 20px;
     border: 1px solid #eee;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: #f9f9f9;
 }
 
@@ -81,8 +84,67 @@ button:hover {
 #hourly-quote {
     font-style: italic;
     color: #555;
+    font-size: 1.1em; /* Slightly larger quote text */
 }
 
 .hidden {
     display: none;
+}
+
+/* --- Time of Day Styles --- */
+
+/* Morning (6 AM - 12 PM) */
+body.morning {
+    background-color: #f0f8ff; /* Light, airy blue */
+    color: #333;
+    background-image: url('morning.jpg'); /* Replace with your image URL or leave empty for no image */
+}
+body.morning .container {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+body.morning h1,
+body.morning h2 {
+    color: #4682b4; /* Steel blue */
+}
+
+/* Afternoon (12 PM - 6 PM) */
+body.afternoon {
+    background-color: #ffe4b5; /* Moccasin */
+    color: #555;
+    background-image: url('afternoon.jpg'); /* Replace with your image URL */
+}
+body.afternoon .container {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+body.afternoon h1,
+body.afternoon h2 {
+    color: #d2691e; /* Chocolate */
+}
+
+/* Evening (6 PM - 10 PM) */
+body.evening {
+    background-color: #a9a9a9; /* Dark gray */
+    color: #f0f0f0;
+    background-image: url('evening.jpg'); /* Replace with your image URL */
+}
+body.evening .container {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+body.evening h1,
+body.evening h2 {
+    color: #e0ffff; /* Light cyan */
+}
+
+/* Night (10 PM - 6 AM) */
+body.night {
+    background-color: #191970; /* Midnight blue */
+    color: #fff;
+    background-image: url('night.jpg'); /* Replace with your image URL */
+}
+body.night .container {
+    background-color: rgba(0, 0, 0, 0.85);
+}
+body.night h1,
+body.night h2 {
+    color: #add8e6; /* Light blue */
 }
