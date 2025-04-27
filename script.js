@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const getQuoteButton = document.getElementById('getQuoteButton');
     const quoteSection = document.getElementById('quote-section');
     const hourlyQuoteDisplay = document.getElementById('hourly-quote');
+    const body = document.body;
 
     const quotes = [
         "The only way to do great work is to love what you do.",
@@ -31,14 +32,47 @@ document.addEventListener('DOMContentLoaded', () => {
         quoteSection.classList.remove('hidden');
     }
 
+    function setTimeOfDayStyle(timezone) {
+        const now = new Date();
+        const userTime = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+        const currentHour = userTime.getHours();
+        body.classList.remove('morning', 'afternoon', 'evening', 'night'); // Clear previous classes
+
+        if (currentHour >= 6 && currentHour < 12) {
+            body.classList.add('morning');
+        } else if (currentHour >= 12 && currentHour < 18) {
+            body.classList.add('afternoon');
+        } else if (currentHour >= 18 && currentHour < 22) {
+            body.classList.add('evening');
+        } else {
+            body.classList.add('night');
+        }
+    }
+
+    function setupHourlyUpdates(timezone) {
+        function checkAndUpdate() {
+            setTimeOfDayStyle(timezone);
+            const now = new Date();
+            const userTime = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+            const currentMinute = userTime.getMinutes();
+
+            if (currentMinute === 0) {
+                updateQuote();
+            }
+        }
+
+        setTimeOfDayStyle(timezone); // Set initial style
+        checkAndUpdate();
+        setInterval(checkAndUpdate, 60 * 1000);
+    }
+
     getQuoteButton.addEventListener('click', () => {
         const selectedTimezone = timezoneSelect.value;
         if (nameInput.value.trim() && selectedTimezone) {
             localStorage.setItem('userName', nameInput.value.trim());
             localStorage.setItem('userTimezone', selectedTimezone);
             setupHourlyUpdates(selectedTimezone);
-            updateQuote(); // Show initial quote
-            // Optionally disable the input fields and button after submission
+            updateQuote();
             nameInput.disabled = true;
             timezoneSelect.disabled = true;
             getQuoteButton.disabled = true;
@@ -47,34 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function setupHourlyUpdates(timezone) {
-        function checkAndUpdate() {
-            const now = new Date();
-            // Get the current hour in the user's timezone
-            const userTime = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-            const currentMinute = userTime.getMinutes();
-
-            // Update the quote at the start of the hour (minute 0)
-            if (currentMinute === 0) {
-                updateQuote();
-            }
-        }
-
-        // Check immediately and then every minute
-        checkAndUpdate();
-        setInterval(checkAndUpdate, 60 * 1000); // Check every minute
-    }
-
-    // Check if user data is already stored and restore if so
     const storedName = localStorage.getItem('userName');
     const storedTimezone = localStorage.getItem('userTimezone');
     if (storedName && storedTimezone) {
         nameInput.value = storedName;
         timezoneSelect.value = storedTimezone;
         setupHourlyUpdates(storedTimezone);
-        updateQuote(); // Show initial quote
+        updateQuote();
         nameInput.disabled = true;
         timezoneSelect.disabled = true;
         getQuoteButton.disabled = true;
+        setTimeOfDayStyle(storedTimezone); // Set initial style on load
     }
 });
